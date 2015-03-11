@@ -1,5 +1,8 @@
 package com.koolob.leetcode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Solution {
 	public int[] rotate(int[] nums, int k) {
         if(nums.length > 1 && k > 1){
@@ -122,8 +125,33 @@ public class Solution {
 	}
 	
 	public int trailingZeroes3(int n) {
-	    if(n < 5) return 0;
-	    else return n/5 + trailingZeroes(n/5);
+		if( n > Integer.MAX_VALUE || n < 5){
+			return 0;
+		}
+		int ret = 0;
+	    for(long i = 5;i<=n;i*=5){
+	    	System.out.println(i);
+	    	ret += n/i;
+	    }
+	    return ret;
 	}
+	
+	public int majorityElement(int[] num) {
+		int res = 0;
+		Map<Integer,Integer> b = new HashMap<Integer,Integer>();
+		for(int i=0;i<num.length;i++){
+			System.out.println(num[i]);
+			if(b.containsKey(num[i])){
+				int all = b.get(num[i])+1;
+				b.put(num[i], all);
+			}else{
+				b.put(num[i], 1);
+			}
+			if(b.get(num[i]) > num.length/2){
+				return num[i];
+			}
+		}
+		return res;
+    }
 
 }
