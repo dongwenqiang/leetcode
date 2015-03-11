@@ -154,4 +154,97 @@ public class Solution {
 		return res;
     }
 
+	public String convertToTitle(int n) {
+		if(n < 1){
+			return "";
+		}
+		int tail = n%26;
+		int next = n/26;
+		if(tail == 0){
+			tail = 26;
+			next = next-1;
+		}
+		return convertToTitle(next)+(char)(tail+64);
+    }
+	
+	public int compareVersion(String version1, String version2) {
+        String[] v1s = version1.split("\\.");
+        String[] v2s = version2.split("\\.");
+        
+        int shortl = v1s.length > v2s.length ? v2s.length : v1s.length;
+        for(int i = 0;i<shortl;i++){
+        	int va = Integer.parseInt(v1s[i]);
+        	int vb = Integer.parseInt(v2s[i]);
+        	if(va > vb){
+        		return 1;
+        	}else if(va < vb){
+        		return -1;
+        	}else{
+        		
+        	}
+        }
+        if(v1s.length > v2s.length){
+        	for(int i=shortl;i<v1s.length;i++){
+        		if(Integer.parseInt(v1s[i]) > 0){
+        			return 1;
+        		}
+        	}
+        	return 0;
+        }else if(v1s.length < v2s.length){
+        	for(int i=shortl;i<v2s.length;i++){
+        		if(Integer.parseInt(v2s[i]) > 0){
+        			return -1;
+        		}
+        	}
+        	return 0;
+        }else{
+        	return 0;
+        }
+    }
+	
+	public int reverseBits(long n) {
+		if(n > Integer.MAX_VALUE){
+//			return 0;
+		}
+		String old = put32(f10to2(n));
+		String news = "";
+		for(int i=old.length()-1;i>=0;i--){
+			news += old.toCharArray()[i];
+		}
+		long last = f2to10(news);
+		if(last > Integer.MAX_VALUE){
+//			return 0;
+		}
+        return (int)last;
+    }
+	private long f2to10(String n){
+		long base = 0;
+		for(int i=0;i<n.length();i++){
+			int o = Integer.parseInt(""+n.toCharArray()[i]);
+			base += o*get2mi(i);
+		}
+		return base;
+	}
+	private long get2mi(int n){
+		long ret = 1;
+		for(int  i=0;i<n;i++){
+			ret *= 2;
+		}
+		return ret;
+	}
+	private String put32(String n){
+		while(n.length() < 32){
+			n = "0"+n;
+		}
+		return n;
+	}
+	private String f10to2(long n){
+		if(n == 0){
+			return "0";
+		}
+		if(n == 1){
+			return "1";
+		}
+		return f10to2(n/2)+n%2;
+	}
 }
